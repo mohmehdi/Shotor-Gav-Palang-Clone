@@ -10,10 +10,12 @@ using UnityEngine;
 public class BehaviorController : MonoBehaviour{
     // currently each puzzle element has one behavior
 
+    public List<IActiveLogic> CurrActiveLogics {get;private set;}
+    public List<IPassiveLogic> CurrPassiveLogics {get;private set;}
     [SerializeReference,SubclassSelector]
-    List<IActiveLogic> _activeLogics = new List<IActiveLogic>();
+    List<IActiveLogic> activeLogics = new List<IActiveLogic>();
     [SerializeReference,SubclassSelector]
-    List<IPassiveLogic> _passiveLogics = new List<IPassiveLogic>();
+    List<IPassiveLogic> passiveLogics = new List<IPassiveLogic>();
     DependencyProvider _provider; // TODO: this can also cache the references
 
     private void OnValidate() => CheckDuplicateStackableActions();
@@ -21,7 +23,7 @@ public class BehaviorController : MonoBehaviour{
     private void CheckDuplicateStackableActions()
     {
         HashSet<Type> duplicates = new HashSet<Type>();
-        foreach (var l in _activeLogics)
+        foreach (var l in activeLogics)
         {
 
             if (l != null && !l.Stackable)
@@ -38,27 +40,33 @@ public class BehaviorController : MonoBehaviour{
     }
 
     private void Awake() => _provider = new DependencyProvider(gameObject);
-    private void Start() {
+    private void Start()
+    {
         CheckDuplicateStackableActions();
+        SwitchBehavior(activeLogics, passiveLogics);
+    }
 
-        foreach (var l in _activeLogics)
+    private void SetupDependencies()
+    {
+        foreach (var l in CurrActiveLogics)
             l.Setup(_provider);
-        foreach (var l in _passiveLogics)
+        foreach (var l in CurrPassiveLogics)
             l.Setup(_provider);
     }
-    void SwitchBehavior(){ 
-        
+
+    public void SwitchBehavior(List<IActiveLogic> active,List<IPassiveLogic> passive){ 
+        CurrActiveLogics = active;
+        CurrPassiveLogics = passive;
+        SetupDependencies();
     }
     void FixedUpdate() {
-        foreach (var active in _activeLogics)
-        {
+        foreach (var active in CurrActiveLogics)
             active.Execute();
-        }
     }
     private void OnCollisionEnter2D(Collision2D other) {
-        foreach (var l in _activeLogics)
+        foreach (var l in CurrActiveLogics)
             l.HandleCollision();
-        foreach (var l in _passiveLogics)
+        foreach (var l in CurrPassiveLogics)
             l.HandleCollision();
     }
 }
