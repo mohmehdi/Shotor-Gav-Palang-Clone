@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public interface IActiveLogic
@@ -6,21 +7,31 @@ public interface IActiveLogic
     /// can puzzle elements have multiple of this logic
     /// </summary>
     bool Stackable{get;}
+    
     /// <summary>
     /// roll back any changes to the initial values
     /// </summary>
-    public void Reset();
+    void Reset();
+
     /// <summary>
     /// get the dependencies for this logic
     /// </summary>
     /// <param name="provider"></param>
-    public void Setup(IDependencyProvider provider);
+    void Setup(IDependencyProvider provider);
+
     /// <summary>
     /// this will be executed every fixedupdate after setup
     /// </summary>
-    public void Execute();
+    void Execute();
+
     /// <summary>
     /// disable the logic
     /// </summary>
-    public void Disable();
+    void Disable();
+
+    /// <summary>
+    /// When object collides with something call this
+    /// </summary> 
+    void HandleCollision();
+
 }
