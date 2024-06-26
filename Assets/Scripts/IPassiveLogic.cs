@@ -1,12 +1,25 @@
+using UnityEngine;
+
 public interface IPassiveLogic {
-    // can puzzle elements have multiple of this logic
+    /// <summary>
+    /// can puzzle elements have multiple of this logic
+    /// </summary>
     bool Stackable{get;}
-    // roll back any changes to the initial values
+    /// <summary>
+    /// roll back any changes to the initial values
+    /// </summary>
     void Reset();
-    // get the dependencies for this logic
-    void Setup(IDependencyProvider provider);
-    // this should be executed once after setup
+    /// <summary>
+    /// get the dependencies for this logic
+    /// </summary>
+    /// <param name="provider"></param>
+    void Setup(IDependencyProvider provider,GameObject obj);
+    /// <summary>
+    /// this should be executed once after setup
+    /// </summary>
     void Execute();
-    // disable the logic
+    /// <summary>
+    /// disable the logic
+    /// </summary>
     void Disable();
  }
