@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class DependencyProvider : IDependencyProvider
 {
-    public T GetDependency<T>(GameObject obj) where T:Component
+    GameObject _obj;
+    public DependencyProvider(GameObject obj)=> this._obj = obj;
+    public T GetDependency<T>() where T:Component
     {
-        return obj.GetComponent<T>();
+        return _obj.GetComponent<T>();
     }
 }

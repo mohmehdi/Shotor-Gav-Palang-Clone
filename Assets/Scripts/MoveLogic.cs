@@ -7,14 +7,14 @@ public enum MovementDirection
     Left=2,
     Right=3
 }
+[System.Serializable]
 public class MoveLogic : IActiveLogic
 {
-
     public bool Stackable => false;
     public float Speed = 1f;
+    MovementDirection _direction = MovementDirection.Left;
 
     Rigidbody2D _rb;
-    MovementDirection _direction = MovementDirection.Left;
     readonly Dictionary<MovementDirection, Vector2> _directionMapping = new()
     {
         { MovementDirection.Up, Vector2.up },
@@ -29,7 +29,10 @@ public class MoveLogic : IActiveLogic
 
     public void Execute()
     {
-        if (_rb == null) return;
+        if (_rb == null){
+            Debug.LogWarning("A Movable Objects requires a RigidBody2D");
+            return;
+        }
         
         if (_directionMapping.TryGetValue(_direction, out Vector2 movement))
         {
@@ -42,8 +45,8 @@ public class MoveLogic : IActiveLogic
         throw new System.NotImplementedException();
     }
 
-    public void Setup(IDependencyProvider provider,GameObject obj)
+    public void Setup(IDependencyProvider provider)
     {
-        _rb = provider.GetDependency<Rigidbody2D>(obj);
+        _rb = provider.GetDependency<Rigidbody2D>();
     }
 }

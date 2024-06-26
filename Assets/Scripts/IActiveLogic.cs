@@ -9,18 +9,18 @@ public interface IActiveLogic
     /// <summary>
     /// roll back any changes to the initial values
     /// </summary>
-    void Reset();
+    public void Reset();
     /// <summary>
     /// get the dependencies for this logic
     /// </summary>
     /// <param name="provider"></param>
-    void Setup(IDependencyProvider provider,GameObject obj);
+    public void Setup(IDependencyProvider provider);
     /// <summary>
     /// this will be executed every fixedupdate after setup
     /// </summary>
-    void Execute();
+    public void Execute();
     /// <summary>
     /// disable the logic
     /// </summary>
-    void Disable();
+    public void Disable();
 }

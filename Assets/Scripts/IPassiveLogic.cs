@@ -13,7 +13,7 @@ public interface IPassiveLogic {
     /// get the dependencies for this logic
     /// </summary>
     /// <param name="provider"></param>
-    void Setup(IDependencyProvider provider,GameObject obj);
+    void Setup(IDependencyProvider provider);
     /// <summary>
     /// this should be executed once after setup
     /// </summary>
