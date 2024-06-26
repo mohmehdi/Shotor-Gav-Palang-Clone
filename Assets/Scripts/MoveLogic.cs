@@ -15,6 +15,7 @@ public class MoveLogic : IActiveLogic
     [SerializeField] MovementDirection _direction = MovementDirection.Left;
 
     Rigidbody2D _rb;
+    Animator _anim;
     readonly Dictionary<MovementDirection, Vector2> _directionMapping = new()
     {
         { MovementDirection.Up, Vector2.up },
@@ -41,10 +42,18 @@ public class MoveLogic : IActiveLogic
             Debug.LogWarning("A Movable Objects requires a RigidBody2D");
             return;
         }
+
         
         if (_directionMapping.TryGetValue(_direction, out Vector2 movement))
         {
             _rb.MovePosition(_rb.position + movement * _speed * Time.fixedDeltaTime);
+            if (_anim == null)
+                Debug.LogWarning("A Movable Objects requires a RigidBody2D");
+            else{
+                _anim.SetFloat("horizontal",movement.x);
+                _anim.SetFloat("vertical",movement.y);
+                _anim.SetFloat("speed",movement.sqrMagnitude);
+            }
         }
     }
 
@@ -56,10 +65,8 @@ public class MoveLogic : IActiveLogic
     public void Setup(IDependencyProvider provider)
     {
         _rb = provider.GetDependency<Rigidbody2D>();
+        _anim = provider.GetDependency<Animator>();
     }
 
-    public void HandleCollision()
-    {
-        _direction = _oppositeDirectionMapping[_direction];
-    }
+    public void HandleCollision() => _direction = _oppositeDirectionMapping[_direction];
 }
