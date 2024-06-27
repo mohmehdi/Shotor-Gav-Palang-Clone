@@ -16,7 +16,7 @@ public class MoveLogic : IActiveLogic, IFreezeEffect
     Rigidbody2D _rb;
     Animator _anim;
 
-    public void Disable(){}
+    public void Disable() { }
 
     public void Execute()
     {
@@ -49,8 +49,11 @@ public class MoveLogic : IActiveLogic, IFreezeEffect
 
     public void Setup(IDependencyProvider provider)
     {
+        if (_anim != null)
+            _anim.SetFloat("speed", 0);
         _rb = provider.GetDependency<Rigidbody2D>();
         _anim = provider.GetDependency<Animator>();
+        arrows.transform.position = _rb.position;
     }
 
     public void HandleCollision(Collision2D other)
@@ -67,6 +70,7 @@ public class MoveLogic : IActiveLogic, IFreezeEffect
 
     public void OnFreeze()
     {
+        arrows.transform.position = _rb.position;
         arrows.SetAnimation(direction);
     }
 
