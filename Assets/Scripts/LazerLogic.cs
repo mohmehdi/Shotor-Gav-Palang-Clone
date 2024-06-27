@@ -13,7 +13,7 @@ public class LazerLogic : IPassiveLogic
 
     public void Disable()
     {
-
+        lazer.gameObject.SetActive(false);
     }
 
     public void Execute()
@@ -36,6 +36,7 @@ public class LazerLogic : IPassiveLogic
     public void Reset()
     {
         lazer.SetLazerOwner(_initialOwner);
+        lazer.gameObject.SetActive(true);
     }
 
     public void Setup(IDependencyProvider provider)

@@ -41,6 +41,13 @@ public class BehaviorController : MonoBehaviour
             }
         }
     }
+    private void OnDisable()
+    {
+        foreach (var l in CurrActiveLogics)
+            l.Disable();
+        foreach (var l in CurrPassiveLogics)
+            l.Disable();
+    }
 
     private void Restart()
     {
@@ -79,7 +86,7 @@ public class BehaviorController : MonoBehaviour
     {
         if (!gameObject.activeSelf)
             return;
-            
+
         foreach (var l in CurrActiveLogics)
         {
             if (l is IFreezeEffect)
