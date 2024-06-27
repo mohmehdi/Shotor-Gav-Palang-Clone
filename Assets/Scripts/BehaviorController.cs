@@ -42,22 +42,9 @@ public class BehaviorController : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        FreezeTime.Instance.OnFreeze.AddListener(Freeze);
-        FreezeTime.Instance.OnDeFreeze.AddListener(DeFreeze);
-        GameManager.Instance.OnRestart.AddListener(Restart);
-    }
-
-    private void OnDisable()
-    {
-        FreezeTime.Instance.OnFreeze.RemoveListener(Freeze);
-        FreezeTime.Instance.OnDeFreeze.RemoveListener(DeFreeze);
-        GameManager.Instance.OnRestart.RemoveListener(Restart);
-    }
-
     private void Restart()
     {
+        gameObject.SetActive(true);
         SwitchBehavior(activeLogics, passiveLogics);
         foreach (var l in CurrActiveLogics)
             l.Reset();
@@ -68,6 +55,9 @@ public class BehaviorController : MonoBehaviour
 
     private void Start()
     {
+        GameManager.Instance.OnRestart.AddListener(Restart);
+        GameManager.Instance.OnFreeze.AddListener(Freeze);
+        GameManager.Instance.OnDeFreeze.AddListener(DeFreeze);
         CheckDuplicateStackableActions();
         SwitchBehavior(activeLogics, passiveLogics);
 
@@ -87,6 +77,9 @@ public class BehaviorController : MonoBehaviour
 
     void Freeze()
     {
+        if (!gameObject.activeSelf)
+            return;
+            
         foreach (var l in CurrActiveLogics)
         {
             if (l is IFreezeEffect)
@@ -100,6 +93,9 @@ public class BehaviorController : MonoBehaviour
     }
     void DeFreeze()
     {
+        if (!gameObject.activeSelf)
+            return;
+
         foreach (var l in CurrActiveLogics)
         {
             if (l is IFreezeEffect)
