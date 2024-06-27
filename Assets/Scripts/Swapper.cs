@@ -10,6 +10,7 @@ public class Swapper : MonoBehaviour
     public UnityEvent<BehaviorController, BehaviorController> OnSwap;
     [SerializeField] LayerMask elements_mask;
     [SerializeField] LayerMask light_mask;
+    [SerializeField] AudioSource swapSound;
     BehaviorController _first = null;
     BehaviorController _second = null;
     Camera _camera;
@@ -60,6 +61,8 @@ public class Swapper : MonoBehaviour
     }
     void Swap(BehaviorController a, BehaviorController b)
     {
+        if (swapSound!= null)
+            swapSound.Play();
         var tempA = a.CurrActiveLogics;
         var tempP = a.CurrPassiveLogics;
         a.SwitchBehavior(b.CurrActiveLogics, b.CurrPassiveLogics);

@@ -12,7 +12,8 @@ public class StaticRigidbodyLogic : IPassiveLogic
 
     public void Execute()
     {
-        _rb.bodyType = RigidbodyType2D.Static;
+        if (_rb != null)
+            _rb.bodyType = RigidbodyType2D.Static;
     }
 
     public void HandleCollision(Collision2D other)

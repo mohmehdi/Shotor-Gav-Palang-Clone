@@ -10,7 +10,7 @@ using UnityEngine;
 public class BehaviorController : MonoBehaviour
 {
     // currently each puzzle element has one behavior
-
+    [SerializeField] AudioClip destroySound;
     public List<IActiveLogic> CurrActiveLogics { get; private set; }
     public List<IPassiveLogic> CurrPassiveLogics { get; private set; }
 
@@ -43,6 +43,9 @@ public class BehaviorController : MonoBehaviour
     }
     private void OnDisable()
     {
+        if (destroySound != null)
+            if (AudioPlayer.Instance != null)
+                AudioPlayer.Instance.PLay(destroySound);
         foreach (var l in CurrActiveLogics)
             l.Disable();
         foreach (var l in CurrPassiveLogics)

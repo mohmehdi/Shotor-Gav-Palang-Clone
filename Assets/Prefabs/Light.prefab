@@ -155,10 +155,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeLogics: []
-  passiveLogics: []
+  passiveLogics:
+  - rid: 955946824097595396
+  - rid: 955946824097595402
+  - rid: 955946824097595406
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 955946824097595396
+      type: {class: TeleportObjectLogic, ns: , asm: Scripts}
+      data:
+        light: {fileID: 6842302552630734395}
+    - rid: 955946824097595402
+      type: {class: StaticRigidbodyLogic, ns: , asm: Scripts}
+    - rid: 955946824097595406
+      type: {class: ResetPositionLogic, ns: , asm: Scripts}
 --- !u!212 &6842302551867427377
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -235,7 +246,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.8, y: 0.98}
+  m_Size: {x: 0.7, y: 0.6}
   m_EdgeRadius: 0
 --- !u!50 &1930651508676113469
 Rigidbody2D:
@@ -301,7 +312,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -322,9 +333,9 @@ MonoBehaviour:
   m_ComponentVersion: 1
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.442
+  m_FalloffIntensity: 0.636
   m_Color: {r: 1, g: 0.9883463, b: 0.7028302, a: 1}
-  m_Intensity: 0.52
+  m_Intensity: 1.07
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 0000000009ca9b3101476d1a0b0844ab3f9319e18d301edd

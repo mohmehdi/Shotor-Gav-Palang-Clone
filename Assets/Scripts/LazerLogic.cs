@@ -13,7 +13,8 @@ public class LazerLogic : IPassiveLogic
 
     public void Disable()
     {
-        lazer.gameObject.SetActive(false);
+        if (lazer != null)
+            lazer.gameObject.SetActive(false);
     }
 
     public void Execute()

@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c686eb816269b7c499bb375e164ffb45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroySound: {fileID: 8300000, guid: 8f5754a3495e4294db6c22a25652bc76, type: 3}
   activeLogics:
   - rid: 955946806175858688
   passiveLogics:

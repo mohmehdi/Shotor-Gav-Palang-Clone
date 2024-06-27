@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1938941624094479218}
   - component: {fileID: 2155099518416555816}
+  - component: {fileID: 7805768467806743271}
   - component: {fileID: 6695445002354516589}
   - component: {fileID: 3182825672681315700}
   - component: {fileID: 699814995921057622}
@@ -48,10 +49,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeLogics: []
-  passiveLogics: []
+  passiveLogics:
+  - rid: 955946824097595400
+  - rid: 955946824097595404
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 955946824097595400
+      type: {class: StaticRigidbodyLogic, ns: , asm: Scripts}
+    - rid: 955946824097595404
+      type: {class: ResetPositionLogic, ns: , asm: Scripts}
+--- !u!114 &7805768467806743271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6193030278307925312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 829c0c2529ed6e147b88c00a6608df1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ID: 0
 --- !u!212 &6695445002354516589
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -149,5 +169,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.85, y: 0.85}
   m_EdgeRadius: 0

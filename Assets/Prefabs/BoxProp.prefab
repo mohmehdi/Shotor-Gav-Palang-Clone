@@ -48,10 +48,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeLogics: []
-  passiveLogics: []
+  passiveLogics:
+  - rid: 955946824097595398
+  - rid: 955946824097595403
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 955946824097595398
+      type: {class: StaticRigidbodyLogic, ns: , asm: Scripts}
+    - rid: 955946824097595403
+      type: {class: ResetPositionLogic, ns: , asm: Scripts}
 --- !u!212 &1940779769351041566
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -149,5 +155,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.85, y: 0.85}
   m_EdgeRadius: 0

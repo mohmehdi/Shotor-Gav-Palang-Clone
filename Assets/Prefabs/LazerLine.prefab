@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1737359407526497082}
   - component: {fileID: 1737359407526497085}
+  - component: {fileID: 7193960068814054912}
   m_Layer: 7
   m_Name: end
   m_TagString: Untagged
@@ -496,6 +497,22 @@ MonoBehaviour:
   - {x: 0.4157348, y: -0.27778515, z: 0}
   - {x: 0.46193978, y: -0.19134171, z: 0}
   - {x: 0.49039266, y: -0.09754512, z: 0}
+--- !u!58 &7193960068814054912
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737359407526497083}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.3
 --- !u!1 &1737359407765884956
 GameObject:
   m_ObjectHideFlags: 0
@@ -506,6 +523,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1737359407765884959}
   - component: {fileID: 1737359407765884958}
+  - component: {fileID: 1064896608106203852}
   m_Layer: 7
   m_Name: start
   m_TagString: Untagged
@@ -992,6 +1010,22 @@ MonoBehaviour:
   - {x: 0.4157348, y: -0.27778515, z: 0}
   - {x: 0.46193978, y: -0.19134171, z: 0}
   - {x: 0.49039266, y: -0.09754512, z: 0}
+--- !u!58 &1064896608106203852
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737359407765884956}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.3
 --- !u!1 &1737359408672019651
 GameObject:
   m_ObjectHideFlags: 0
@@ -1002,6 +1036,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1737359408672019650}
   - component: {fileID: 1737359408672019653}
+  - component: {fileID: 3971880993338139067}
   m_Layer: 7
   m_Name: mid
   m_TagString: Untagged
@@ -1172,6 +1207,32 @@ MonoBehaviour:
   - {x: 0.104072094, y: -0.4827232, z: 0}
   - {x: 0.11973429, y: 0.44408786, z: 0}
   - {x: -0.10407162, y: 0.4388101, z: 0}
+--- !u!61 &3971880993338139067
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737359408672019651}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.25, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1737359408752392614
 GameObject:
   m_ObjectHideFlags: 0
