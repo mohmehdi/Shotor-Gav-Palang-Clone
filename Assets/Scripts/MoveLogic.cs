@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [System.Serializable]
-public class MoveLogic : IActiveLogic,IFreezeEffect
+public class MoveLogic : IActiveLogic, IFreezeEffect
 {
     public bool Stackable => false;
     [SerializeField] float speed = 1f;
@@ -12,13 +12,11 @@ public class MoveLogic : IActiveLogic,IFreezeEffect
     [SerializeField] Direction direction = Direction.Left;
     [SerializeField] AnimatedDirectionalSprite arrows;
 
+    Direction _initialDir;
     Rigidbody2D _rb;
     Animator _anim;
 
-    public void Disable()
-    {
-        throw new System.NotImplementedException();
-    }
+    public void Disable(){}
 
     public void Execute()
     {
@@ -39,9 +37,14 @@ public class MoveLogic : IActiveLogic,IFreezeEffect
         _anim.SetFloat("speed", movement.sqrMagnitude);
     }
 
+    public void Start()
+    {
+        _initialDir = direction;
+    }
+
     public void Reset()
     {
-        throw new System.NotImplementedException();
+        direction = _initialDir;
     }
 
     public void Setup(IDependencyProvider provider)

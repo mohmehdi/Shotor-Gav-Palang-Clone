@@ -51,7 +51,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeLogics:
   - rid: 955946806175858688
-  passiveLogics: []
+  passiveLogics:
+  - rid: 955946819936845824
   references:
     version: 2
     RefIds:
@@ -62,6 +63,8 @@ MonoBehaviour:
         changeDirectionAngle: 60
         direction: 2
         arrows: {fileID: 5835568710873961353}
+    - rid: 955946819936845824
+      type: {class: ResetPositionLogic, ns: , asm: Scripts}
 --- !u!212 &4702136523090064377
 SpriteRenderer:
   m_ObjectHideFlags: 0

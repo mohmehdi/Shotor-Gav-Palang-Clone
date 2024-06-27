@@ -42,6 +42,12 @@ public class Swapper : MonoBehaviour
                 if (_first != null)
                 {
                     _second = hit.collider.GetComponent<BehaviorController>();
+                    if (_first.gameObject == _second.gameObject){
+                        OnFirstUnSelected.Invoke();
+                        _first = null;
+                        return;
+                    }
+
                     OnSwap.Invoke(_first, _second);
                 }
                 else

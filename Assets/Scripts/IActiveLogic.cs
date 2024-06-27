@@ -9,6 +9,11 @@ public interface IActiveLogic
     bool Stackable{get;}
 
     /// <summary>
+    /// one time initializations similar to Awake and Start
+    /// </summary>
+    void Start();
+
+    /// <summary>
     /// roll back any changes to the initial values
     /// </summary>
     void Reset();

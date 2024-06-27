@@ -7,17 +7,18 @@ using UnityEngine;
 /// <summary>
 /// Holds all the logic objects and executes them 
 /// </summary>
-public class BehaviorController : MonoBehaviour{
+public class BehaviorController : MonoBehaviour
+{
     // currently each puzzle element has one behavior
 
-    public List<IActiveLogic> CurrActiveLogics {get;private set;}
-    public List<IPassiveLogic> CurrPassiveLogics {get;private set;}
+    public List<IActiveLogic> CurrActiveLogics { get; private set; }
+    public List<IPassiveLogic> CurrPassiveLogics { get; private set; }
 
-    [SerializeReference,SubclassSelector]
+    [SerializeReference, SubclassSelector]
     List<IActiveLogic> activeLogics = new List<IActiveLogic>();
-    [SerializeReference,SubclassSelector]
+    [SerializeReference, SubclassSelector]
     List<IPassiveLogic> passiveLogics = new List<IPassiveLogic>();
-    
+
     DependencyProvider _provider; // TODO: this can also cache the references
 
     private void OnValidate() => CheckDuplicateStackableActions();
@@ -41,15 +42,39 @@ public class BehaviorController : MonoBehaviour{
         }
     }
 
+    private void OnEnable()
+    {
+        FreezeTime.Instance.OnFreeze.AddListener(Freeze);
+        FreezeTime.Instance.OnDeFreeze.AddListener(DeFreeze);
+        GameManager.Instance.OnRestart.AddListener(Restart);
+    }
+
+    private void OnDisable()
+    {
+        FreezeTime.Instance.OnFreeze.RemoveListener(Freeze);
+        FreezeTime.Instance.OnDeFreeze.RemoveListener(DeFreeze);
+        GameManager.Instance.OnRestart.RemoveListener(Restart);
+    }
+
+    private void Restart()
+    {
+        SwitchBehavior(activeLogics, passiveLogics);
+        foreach (var l in CurrActiveLogics)
+            l.Reset();
+        foreach (var l in CurrPassiveLogics)
+            l.Reset();
+    }
     private void Awake() => _provider = new DependencyProvider(gameObject);
+
     private void Start()
     {
         CheckDuplicateStackableActions();
         SwitchBehavior(activeLogics, passiveLogics);
 
-        FreezeTime.Instance.OnFreeze.AddListener(Freeze);
-        FreezeTime.Instance.OnDeFreeze.AddListener(DeFreeze);
-
+        foreach (var l in CurrActiveLogics)
+            l.Start();
+        foreach (var l in CurrPassiveLogics)
+            l.Start();
     }
 
     private void SetupDependencies()
@@ -60,36 +85,48 @@ public class BehaviorController : MonoBehaviour{
             l.Setup(_provider);
     }
 
-    void Freeze(){
-        foreach (var l in CurrActiveLogics){
+    void Freeze()
+    {
+        foreach (var l in CurrActiveLogics)
+        {
             if (l is IFreezeEffect)
                 (l as IFreezeEffect).OnFreeze();
         }
-        foreach (var l in CurrPassiveLogics){
+        foreach (var l in CurrPassiveLogics)
+        {
             if (l is IFreezeEffect)
                 (l as IFreezeEffect).OnFreeze();
         }
     }
-    void DeFreeze(){
-        foreach (var l in CurrActiveLogics){
+    void DeFreeze()
+    {
+        foreach (var l in CurrActiveLogics)
+        {
             if (l is IFreezeEffect)
                 (l as IFreezeEffect).OnDeFreeze();
         }
-        foreach (var l in CurrPassiveLogics){
+        foreach (var l in CurrPassiveLogics)
+        {
             if (l is IFreezeEffect)
                 (l as IFreezeEffect).OnDeFreeze();
         }
     }
-    public void SwitchBehavior(List<IActiveLogic> active,List<IPassiveLogic> passive){ 
+    public void SwitchBehavior(List<IActiveLogic> active, List<IPassiveLogic> passive)
+    {
         CurrActiveLogics = active;
         CurrPassiveLogics = passive;
         SetupDependencies();
+
+        foreach (var pass in CurrPassiveLogics)
+            pass.Execute();
     }
-    void FixedUpdate() {
+    void FixedUpdate()
+    {
         foreach (var active in CurrActiveLogics)
             active.Execute();
     }
-    private void OnCollisionEnter2D(Collision2D other) {
+    private void OnCollisionEnter2D(Collision2D other)
+    { // TODO: Switch two Kinematic bodies with trigger, this is buggy
         foreach (var l in CurrActiveLogics)
             l.HandleCollision(other);
         foreach (var l in CurrPassiveLogics)

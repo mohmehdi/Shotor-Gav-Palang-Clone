@@ -6,7 +6,12 @@ public interface IPassiveLogic
     /// can puzzle elements have multiple of this logic
     /// </summary>
     bool Stackable { get; }
-   
+
+    /// <summary>
+    /// one time initializations similar to Awake and Start
+    /// </summary>
+    void Start();
+
     /// <summary>
     /// one time initializations
     /// </summary>
@@ -19,7 +24,7 @@ public interface IPassiveLogic
     void Setup(IDependencyProvider provider);
 
     /// <summary>
-    /// this should be executed once after setup
+    /// this should be executed once after setup every swap
     /// </summary>
     void Execute();
 
