@@ -36,7 +36,7 @@ public class LazerLogic : IPassiveLogic
     public void Reset()
     {
         lazer.gameObject.SetActive(true);
-        lazer.SetLazerOwner(_initialOwner);
+        // lazer.SetLazerOwner(_initialOwner);
         Execute();
     }
 

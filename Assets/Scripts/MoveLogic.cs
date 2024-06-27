@@ -25,7 +25,7 @@ public class MoveLogic : IActiveLogic, IFreezeEffect
             Debug.LogWarning("A Movable Objects requires a RigidBody2D");
             return;
         }
-
+        _rb.bodyType = RigidbodyType2D.Dynamic;
         var movement = direction.GetDirectionVector();
         _rb.MovePosition(_rb.position + movement * speed * Time.fixedDeltaTime);
 
