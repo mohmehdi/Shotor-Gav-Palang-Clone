@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class Lazer : MonoBehaviour
     [SerializeField] Transform lightStart;
     [SerializeField] Transform lightEnd;
     [SerializeField] Transform lightMid;
+    Vector3 _lineDirection = Vector3.zero;
     Transform _ownerTransform;
     Transform _transform;
     LineRenderer _line;
@@ -30,36 +32,38 @@ public class Lazer : MonoBehaviour
     {
         _line.SetPosition(0, start);
         _line.SetPosition(1, end);
+        _lineDirection =  end - start;
     }
     private void Update()
     {
+        UpdateLine();
         SetupLight();
         CreateCollider();
     }
 
+    private void UpdateLine()
+    {
+        _line.SetPosition(0, _ownerTransform.position);
+        _line.SetPosition(1, _ownerTransform.position + _lineDirection);
+    }
+
     private void SetupLight()
     {
-        var start = _line.GetPosition(0);
-        var end = _line.GetPosition(1);
-        var lightDirection = end - start;
         lightStart.position = _ownerTransform.position;
-        lightEnd.position = _ownerTransform.position + lightDirection;
+        lightEnd.position = _ownerTransform.position + _lineDirection;
 
-        lightMid.position = _ownerTransform.position + (lightDirection / 2);
-        lightMid.rotation = Quaternion.Euler(0, 0, -Mathf.Rad2Deg * Mathf.Atan2(lightDirection.x, lightDirection.y));
+        lightMid.position = _ownerTransform.position + (_lineDirection / 2);
+        lightMid.rotation = Quaternion.Euler(0, 0, -Mathf.Rad2Deg * Mathf.Atan2(_lineDirection.x, _lineDirection.y));
 
         var scale = lightMid.localScale;
-        scale.y = lightDirection.magnitude;
+        scale.y = _lineDirection.magnitude;
         lightMid.localScale = scale;
     }
 
     private void CreateCollider()
     {
-        var start = _line.GetPosition(0);
-        var end = _line.GetPosition(1);
-        var lightDirection = end - start;
         Vector2 startV2 = new Vector2(_ownerTransform.position.x-_transform.position.x, _ownerTransform.position.y-_transform.position.y);
-        Vector2 endV2 = new Vector2(_ownerTransform.position.x + lightDirection.x-_transform.position.x, _ownerTransform.position.y + lightDirection.y-_transform.position.y);
+        Vector2 endV2 = new Vector2(_ownerTransform.position.x + _lineDirection.x-_transform.position.x, _ownerTransform.position.y + _lineDirection.y-_transform.position.y);
 
         var perpendicular = Vector2.Perpendicular(startV2 - endV2).normalized / 2 * area;
 
