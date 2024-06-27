@@ -12,8 +12,11 @@ public enum Direction
 public class MoveLogic : IActiveLogic
 {
     public bool Stackable => false;
-    [SerializeField] float _speed = 1f;
-    [SerializeField] Direction _direction = Direction.Left;
+    [SerializeField] float speed = 1f;
+    [Range(0, 360)]
+    [Tooltip("The angle in which if collision occurs in front of this object it turns around")]
+    [SerializeField] float changeDirectionAngle = 60f;
+    [SerializeField] Direction direction = Direction.Left;
 
     Rigidbody2D _rb;
     Animator _anim;
@@ -31,8 +34,8 @@ public class MoveLogic : IActiveLogic
             return;
         }
 
-        var movement = _direction.GetDirectionVector();
-        _rb.MovePosition(_rb.position + movement * _speed * Time.fixedDeltaTime);
+        var movement = direction.GetDirectionVector();
+        _rb.MovePosition(_rb.position + movement * speed * Time.fixedDeltaTime);
 
         if (_anim == null)
             return;
@@ -53,5 +56,15 @@ public class MoveLogic : IActiveLogic
         _anim = provider.GetDependency<Animator>();
     }
 
-    public void HandleCollision() => _direction = _direction.GetOppositeDirection();
+    public void HandleCollision(Collision2D other)
+    {
+        if (_rb == null) return;
+        _rb.velocity = Vector2.zero;
+        var collision_direction =other.collider.ClosestPoint(_rb.position) - _rb.position; 
+        // Debug.DrawRay(_rb.position,collision_direction,Color.red);
+        // Debug.DrawRay( _rb.position,direction.GetDirectionVector(),Color.green);
+        // Debug.Log($"{_rb.name} -> {Vector2.Angle(collision_direction,direction.GetDirectionVector())}");
+        if (Vector2.Angle(collision_direction,direction.GetDirectionVector()) < changeDirectionAngle)
+            direction = direction.GetOppositeDirection();
+    }
 }

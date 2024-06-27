@@ -32,6 +32,6 @@ public interface IActiveLogic
     /// <summary>
     /// When object collides with something call this
     /// </summary> 
-    void HandleCollision();
+    void HandleCollision(Collision2D other);
 
 }

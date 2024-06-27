@@ -59,5 +59,6 @@ public class Swapper : MonoBehaviour
         b.SwitchBehavior(tempA,tempP);
         _first = null;
         _second = null;
+        OnFirstUnSelected.Invoke();
     }
 }

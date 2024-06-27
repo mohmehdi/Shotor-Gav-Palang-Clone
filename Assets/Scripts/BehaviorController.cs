@@ -65,8 +65,8 @@ public class BehaviorController : MonoBehaviour{
     }
     private void OnCollisionEnter2D(Collision2D other) {
         foreach (var l in CurrActiveLogics)
-            l.HandleCollision();
+            l.HandleCollision(other);
         foreach (var l in CurrPassiveLogics)
-            l.HandleCollision();
+            l.HandleCollision(other);
     }
 }

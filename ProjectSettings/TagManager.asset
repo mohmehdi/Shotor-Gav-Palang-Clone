@@ -11,8 +11,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Puzzle Elements
+  - Light Area
   - 
   - 
   - 
@@ -52,4 +52,7 @@ TagManager:
     locked: 0
   - name: player
     uniqueID: 3776549695
+    locked: 0
+  - name: ui
+    uniqueID: 3709743245
     locked: 0
