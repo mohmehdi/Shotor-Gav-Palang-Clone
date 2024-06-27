@@ -53,7 +53,8 @@ public class MoveLogic : IActiveLogic, IFreezeEffect
             _anim.SetFloat("speed", 0);
         _rb = provider.GetDependency<Rigidbody2D>();
         _anim = provider.GetDependency<Animator>();
-        arrows.transform.position = _rb.position;
+        if (arrows != null)
+            arrows.transform.position = _rb.position;
     }
 
     public void HandleCollision(Collision2D other)
