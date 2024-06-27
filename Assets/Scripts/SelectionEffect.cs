@@ -8,8 +8,9 @@ public class SelectionEffect : MonoBehaviour
     Transform _transform;
     private void Awake() => _transform = transform;
     public void SetTarget(BehaviorController target) => _target = target.transform;
-    private void Update() {
-        if (_target == null)return;
+    private void Update()
+    {
+        if (_target == null) return;
         _transform.position = _target.position;
     }
 }

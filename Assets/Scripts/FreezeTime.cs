@@ -26,13 +26,13 @@ public class FreezeTime : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             Time.timeScale = isFreeze ? 1 : 0;
+            isFreeze = !isFreeze;
 
             if (isFreeze)
                 OnFreeze.Invoke();
             else
                 OnDeFreeze.Invoke();
                 
-            isFreeze = !isFreeze;
         }
     }
 }

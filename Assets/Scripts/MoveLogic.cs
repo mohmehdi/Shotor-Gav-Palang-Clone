@@ -1,15 +1,8 @@
 using System;
 using UnityEngine;
-public enum Direction
-{
-    Up = 0,
-    Down = 1,
-    Left = 2,
-    Right = 3
 
-}
 [System.Serializable]
-public class MoveLogic : IActiveLogic
+public class MoveLogic : IActiveLogic,IFreezeEffect
 {
     public bool Stackable => false;
     [SerializeField] float speed = 1f;
@@ -17,6 +10,7 @@ public class MoveLogic : IActiveLogic
     [Tooltip("The angle in which if collision occurs in front of this object it turns around")]
     [SerializeField] float changeDirectionAngle = 60f;
     [SerializeField] Direction direction = Direction.Left;
+    [SerializeField] AnimatedDirectionalSprite arrows;
 
     Rigidbody2D _rb;
     Animator _anim;
@@ -60,11 +54,21 @@ public class MoveLogic : IActiveLogic
     {
         if (_rb == null) return;
         _rb.velocity = Vector2.zero;
-        var collision_direction =other.collider.ClosestPoint(_rb.position) - _rb.position; 
+        var collision_direction = other.collider.ClosestPoint(_rb.position) - _rb.position;
         // Debug.DrawRay(_rb.position,collision_direction,Color.red);
         // Debug.DrawRay( _rb.position,direction.GetDirectionVector(),Color.green);
         // Debug.Log($"{_rb.name} -> {Vector2.Angle(collision_direction,direction.GetDirectionVector())}");
-        if (Vector2.Angle(collision_direction,direction.GetDirectionVector()) < changeDirectionAngle)
+        if (Vector2.Angle(collision_direction, direction.GetDirectionVector()) < changeDirectionAngle)
             direction = direction.GetOppositeDirection();
+    }
+
+    public void OnFreeze()
+    {
+        arrows.SetAnimation(direction);
+    }
+
+    public void OnDeFreeze()
+    {
+        arrows.ClearAnimation();
     }
 }

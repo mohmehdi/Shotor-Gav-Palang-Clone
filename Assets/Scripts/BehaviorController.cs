@@ -12,10 +12,12 @@ public class BehaviorController : MonoBehaviour{
 
     public List<IActiveLogic> CurrActiveLogics {get;private set;}
     public List<IPassiveLogic> CurrPassiveLogics {get;private set;}
+
     [SerializeReference,SubclassSelector]
     List<IActiveLogic> activeLogics = new List<IActiveLogic>();
     [SerializeReference,SubclassSelector]
     List<IPassiveLogic> passiveLogics = new List<IPassiveLogic>();
+    
     DependencyProvider _provider; // TODO: this can also cache the references
 
     private void OnValidate() => CheckDuplicateStackableActions();
@@ -44,6 +46,10 @@ public class BehaviorController : MonoBehaviour{
     {
         CheckDuplicateStackableActions();
         SwitchBehavior(activeLogics, passiveLogics);
+
+        FreezeTime.Instance.OnFreeze.AddListener(Freeze);
+        FreezeTime.Instance.OnDeFreeze.AddListener(DeFreeze);
+
     }
 
     private void SetupDependencies()
@@ -54,6 +60,26 @@ public class BehaviorController : MonoBehaviour{
             l.Setup(_provider);
     }
 
+    void Freeze(){
+        foreach (var l in CurrActiveLogics){
+            if (l is IFreezeEffect)
+                (l as IFreezeEffect).OnFreeze();
+        }
+        foreach (var l in CurrPassiveLogics){
+            if (l is IFreezeEffect)
+                (l as IFreezeEffect).OnFreeze();
+        }
+    }
+    void DeFreeze(){
+        foreach (var l in CurrActiveLogics){
+            if (l is IFreezeEffect)
+                (l as IFreezeEffect).OnDeFreeze();
+        }
+        foreach (var l in CurrPassiveLogics){
+            if (l is IFreezeEffect)
+                (l as IFreezeEffect).OnDeFreeze();
+        }
+    }
     public void SwitchBehavior(List<IActiveLogic> active,List<IPassiveLogic> passive){ 
         CurrActiveLogics = active;
         CurrPassiveLogics = passive;

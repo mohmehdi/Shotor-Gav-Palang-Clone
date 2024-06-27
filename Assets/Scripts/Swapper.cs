@@ -7,7 +7,7 @@ public class Swapper : MonoBehaviour
 {
     public UnityEvent<BehaviorController> OnFirstSelected;
     public UnityEvent OnFirstUnSelected;
-    public UnityEvent<BehaviorController,BehaviorController> OnSwap;
+    public UnityEvent<BehaviorController, BehaviorController> OnSwap;
     [SerializeField] LayerMask elements_mask;
     [SerializeField] LayerMask light_mask;
     BehaviorController _first = null;
@@ -42,7 +42,7 @@ public class Swapper : MonoBehaviour
                 if (_first != null)
                 {
                     _second = hit.collider.GetComponent<BehaviorController>();
-                    OnSwap.Invoke(_first,_second);
+                    OnSwap.Invoke(_first, _second);
                 }
                 else
                 {
@@ -52,11 +52,12 @@ public class Swapper : MonoBehaviour
             }
         }
     }
-    void Swap(BehaviorController a,BehaviorController b){
+    void Swap(BehaviorController a, BehaviorController b)
+    {
         var tempA = a.CurrActiveLogics;
         var tempP = a.CurrPassiveLogics;
-        a.SwitchBehavior(b.CurrActiveLogics,b.CurrPassiveLogics);
-        b.SwitchBehavior(tempA,tempP);
+        a.SwitchBehavior(b.CurrActiveLogics, b.CurrPassiveLogics);
+        b.SwitchBehavior(tempA, tempP);
         _first = null;
         _second = null;
         OnFirstUnSelected.Invoke();

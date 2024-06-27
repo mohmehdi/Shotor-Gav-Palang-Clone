@@ -6,9 +6,9 @@ public interface IPassiveLogic
     /// can puzzle elements have multiple of this logic
     /// </summary>
     bool Stackable { get; }
-    
+   
     /// <summary>
-    /// roll back any changes to the initial values
+    /// one time initializations
     /// </summary>
     void Reset();
 
